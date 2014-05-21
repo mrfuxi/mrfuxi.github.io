@@ -36,8 +36,8 @@ When you update your theme, backup this file and re-add it after.
 }
 
 /* Temporally disabled */
-.fa-comment {
-    display: none;
+a.fa-comment {
+    width: auto;
 }
 
 #page.no_sidebar section.content {

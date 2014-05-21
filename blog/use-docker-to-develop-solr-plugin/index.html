@@ -109,7 +109,7 @@
     <ul class="post-meta pad group">
         <li><a href="http://mrfuxi.github.io/blog/" title="View all posts in blog" rel="category tag">blog</a></li>
         <li><i class="fa fa-clock-o"></i>2014-05-05</li>
-        <li><a href="http://mrfuxi.github.io/blog/use-docker-to-develop-solr-plugin/#comments"><i class="fa fa-comment"></i></a></li>
+        <li><a class="fa fa-comment" href="http://mrfuxi.github.io/blog/use-docker-to-develop-solr-plugin/#disqus_thread" disqus_identifier="2014-05-05-docker-solr-plugin"></a></li>
     </ul>
 
 
@@ -223,6 +223,35 @@ That way environment part is done. Remaining thing is to be able to compile and 
 <span class="o">&lt;/</span><span class="n">project</span><span class="o">&gt;</span>
 </pre></div>
                 </div>
+
+    <div class="blogItem">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'mrfuxi';
+
+        var disqus_identifier = '2014-05-05-docker-solr-plugin';
+
+
+        (function() {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] ||
+             document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>
+        Please enable JavaScript to view the
+        <a href="http://disqus.com/?ref_noscript=mrfuxi">
+            comments powered by Disqus.
+        </a>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">
+        blog comments powered by <span class="logo-disqus">Disqus</span>
+    </a>
+    </div>
         </div>
     </div>
 </article>    </div>
@@ -245,6 +274,15 @@ That way environment part is done. Remaining thing is to be able to compile and 
 
     ga('create', 'UA-51123213-1', 'auto');
     ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    var disqus_shortname = 'mrfuxi';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
 </script>
 
 <footer id="footer">
