@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Coding After Hours</title><link>http://mrfuxi.github.io/</link><description></description><atom:link href="http://mrfuxi.github.io/feeds/karol-duleba.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 15 May 2014 00:00:00 +0100</lastBuildDate><item><title>Essential tool set</title><link>http://mrfuxi.github.io/blog/essential-tool-set/</link><description>&lt;p&gt;I believe that &lt;strong&gt;every&lt;/strong&gt; developer should have this essential set of tools for day to day use.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Coding After Hours</title><link>http://mrfuxi.github.io/</link><description></description><atom:link href="http://mrfuxi.github.io/feeds/karol-duleba.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 25 May 2014 00:00:00 +0100</lastBuildDate><item><title>Article digest #1</title><link>http://mrfuxi.github.io/blog/article-digest-1/</link><description>&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/FEE1DE4D/PyMarkovTextGenerator"&gt;PyMarkovTextGenerator&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Interesting concept of generating randomized text using Markov chains, of course using Python&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://nuitka.net/posts/try-finally-python-quiz.html"&gt;Try Finally Python Quiz&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Short but very interesting quiz about try-finally in Python. You can learn something every day. Spoiler alert: I did not know that &lt;code&gt;continue&lt;/code&gt; is not supported within &lt;code&gt;finally&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://blog.ionelmc.ro/2014/05/10/django-sticky-queryset-filters/"&gt;Django sticky queryset filters&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you look at something close enough you will find cracks. That same goes about Django. I know that ORM is making live easier and allow to develop faster. But there is a hefty price to pay - you not always know what's happening underneath. And if you would know you might get scared.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.toptal.com/python/top-10-mistakes-that-python-programmers-make"&gt;Top 10 Mistakes that Python Programmers Make&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;List of 10 Python gotchas with explanation and way around the "problem". My favourite is the first one.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://blog.8thlight.com/uncle-bob/2014/05/10/WhenToMock.html"&gt;When to mock&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A guide when to use mocking and when to try other techniques.
+TLDR; Do not overuse mocks:
+&lt;em&gt;"Mock across architecturally significant boundaries, but not within those boundaries"&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://overapi.com/python/"&gt;Python Cheat Sheet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Short reference of common Python functionality - set, dict, array, string, math, class, sys, os, string/date formatting, file, date, random. If you are interested in something else than Python (for some strange reason), site has also similar info about other things including Linux, Git, MySQL, JS, NodeJS.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://around-technology.blogspot.fr/2014/04/django-cheat-sheet-15.html"&gt;Django Cheat Sheet 1.5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This time reference of Django 1.5 - templates, forms, models and admin&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Karol Dulęba</dc:creator><pubDate>Sun, 25 May 2014 00:00:00 +0100</pubDate><guid>tag:mrfuxi.github.io,2014-05-25:blog/article-digest-1/</guid></item><item><title>Essential tool set</title><link>http://mrfuxi.github.io/blog/essential-tool-set/</link><description>&lt;p&gt;I believe that &lt;strong&gt;every&lt;/strong&gt; developer should have this essential set of tools for day to day use.
 You might not realize you actually using it, most of the times it's just habit, or as you like "only reasonable way to do stuff".
 Someone might argue that tools you're using are closely related to language you're using. That is right, at least in most of cases.
 However there are tools that are used by everyone/vast majority (some might not apply to front-enders)&lt;/p&gt;
