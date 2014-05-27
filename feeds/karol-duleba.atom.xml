@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding After Hours</title><link href="http://mrfuxi.github.io/" rel="alternate"></link><link href="http://mrfuxi.github.io/feeds/karol-duleba.atom.xml" rel="self"></link><id>http://mrfuxi.github.io/</id><updated>2014-05-25T00:00:00+01:00</updated><entry><title>Article digest #1</title><link href="http://mrfuxi.github.io/blog/article-digest-1/" rel="alternate"></link><updated>2014-05-25T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-05-25:blog/article-digest-1/</id><summary type="html">&lt;ol&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding After Hours</title><link href="http://mrfuxi.github.io/" rel="alternate"></link><link href="http://mrfuxi.github.io/feeds/karol-duleba.atom.xml" rel="self"></link><id>http://mrfuxi.github.io/</id><updated>2014-05-26T00:00:00+01:00</updated><entry><title>Pyp split brain</title><link href="http://mrfuxi.github.io/blog/pyp-split-brain/" rel="alternate"></link><updated>2014-05-26T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-05-26:blog/pyp-split-brain/</id><summary type="html">&lt;blockquote&gt;
+&lt;p&gt;"The Pyed Piper", or pyp, is a linux command line text manipulation tool similar to awk or sed, but which uses standard python string and list methods as well as custom functions evolved to generate fast results in an intense production environment.&lt;/p&gt;
+&lt;p&gt;-- &lt;cite&gt;&lt;a href="http://opensource.imageworks.com/?p=pyp"&gt;Sony&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Fist checkout the &lt;a href="https://www.youtube.com/watch?v=eWtVWF0JSJA"&gt;demo video on YouTube&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It all looks very good. Guys from Sony did a very good job. Additionally the fact that it's Python makes it all even better, as almost everything with Python is better ;)
+But is it really that good?&lt;/p&gt;
+&lt;p&gt;Don't get me wrong. I'm all for simplification of the life, especially using Python. But isn't that crossing some kind of line, &lt;a href="http://en.wikipedia.org/wiki/Unix_philosophy"&gt;proposed by Unix&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;(That is the moment when my Python brain fights against Unix brain)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Unix brain:&lt;/strong&gt;
+Unix shell is giving you all the power you need, and there is still some more to grab, if you know how. What else do you need?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Python brain:&lt;/strong&gt;
+Python is and an infinite power. Pyp let you use that power to parse text in shell like fashion.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Unix brain:&lt;/strong&gt;
+It's almost Python. The &lt;em&gt;almost&lt;/em&gt; is a key word. To use it's power you need to learn very specific functionality.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Python brain:&lt;/strong&gt;
+But I know Python, how hard could it be to remember couple of variables and functions.
+Once &lt;em&gt;time saving and often used&lt;/em&gt; functionality is created it can be saved to be easily reused.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Unix brain:&lt;/strong&gt;
+It's saved to &lt;em&gt;some&lt;/em&gt; location, and you don't know where or how to recreate it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Python brain:&lt;/strong&gt;
+Yeah, yeah. It's all in the source code. Just look it up.
+This package gives you all what you need, in one place.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Unix brain:&lt;/strong&gt;
+Heh, all you need is a &lt;a href="http://en.wikipedia.org/wiki/KISS_principle"&gt;KISS&lt;/a&gt;...&lt;/p&gt;
+&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;Assuming you will go for it and start using &lt;code&gt;pyp&lt;/code&gt;, all is fine and dandy.
+Then one day you need to do some work on other machine (when paring or working on remote box).
+Are you going to say: &lt;em&gt;"Wait, I just need to install this python package..."&lt;/em&gt;, because you don't know how to use standard Unix commands?
+I would feel very embarrassed.
+Last time when I heard: &lt;em&gt;Email me this file and I will write a Perl script to parse it&lt;/em&gt;, I thought is was a joke.&lt;/p&gt;
+&lt;p&gt;Just learn damn shell! It will serve you well for a years to come, and you can embarrass others as a bonus :D&lt;/p&gt;
+&lt;p&gt;Jokes aside, I will try to give Pyp a chance, but shell is the way to go.&lt;/p&gt;</summary></entry><entry><title>Article digest #1</title><link href="http://mrfuxi.github.io/blog/article-digest-1/" rel="alternate"></link><updated>2014-05-25T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-05-25:blog/article-digest-1/</id><summary type="html">&lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="https://github.com/FEE1DE4D/PyMarkovTextGenerator"&gt;PyMarkovTextGenerator&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Interesting concept of generating randomized text using Markov chains, of course using Python&lt;/p&gt;
