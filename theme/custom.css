@@ -47,3 +47,11 @@ a.fa-comment {
 .highlight {
     border: none;
 }
+
+pre code {
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    font-size: medium;
+    line-height: 1.75em;
+}

@@ -1,5 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding After Hours</title><link href="http://mrfuxi.github.io/" rel="alternate"></link><link href="http://mrfuxi.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://mrfuxi.github.io/</id><updated>2014-05-26T00:00:00+01:00</updated><entry><title>Pyp split brain</title><link href="http://mrfuxi.github.io/blog/pyp-split-brain/" rel="alternate"></link><updated>2014-05-26T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-05-26:blog/pyp-split-brain/</id><summary type="html">&lt;blockquote&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding After Hours</title><link href="http://mrfuxi.github.io/" rel="alternate"></link><link href="http://mrfuxi.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://mrfuxi.github.io/</id><updated>2014-06-16T00:00:00+01:00</updated><entry><title>Python gotchas</title><link href="http://mrfuxi.github.io/blog/python-gotchas/" rel="alternate"></link><updated>2014-06-16T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-06-16:blog/python-gotchas/</id><summary type="html">&lt;p&gt;There are times in life of every Python developer, when you are staring at the screen and can not explain or even understand what just happened.&lt;/p&gt;
+&lt;p&gt;I would like to show couple of Python gotchas, that should a bring smile onto your face. At least that's the effect they have on me.&lt;/p&gt;
+&lt;h2&gt;Identity of an int&lt;/h2&gt;
+&lt;p&gt;Imagine scenario when you're comparing identities of 2 objects, ints in this case (do not confuse with comparing values).&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; list_a = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
+&amp;gt;&amp;gt;&amp;gt; list_b = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
+&amp;gt;&amp;gt;&amp;gt; for a, b in zip(list_a, list_b):
+...     print &amp;quot;{:3} is {:3} -&amp;gt; {}&amp;quot;.format(a, b, a is b)
+
+ -6 is  -6 -&amp;gt; False
+ -5 is  -5 -&amp;gt; True
+ -1 is  -1 -&amp;gt; True
+  0 is   0 -&amp;gt; True
+  1 is   1 -&amp;gt; True
+ 10 is  10 -&amp;gt; True
+256 is 256 -&amp;gt; True
+257 is 257 -&amp;gt; False
+999 is 999 -&amp;gt; False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You might expect to get Falses for all of comparisons, as new int object should get a new address and &lt;code&gt;is&lt;/code&gt; operator compares addresses. If you did not know that or you don't believe try running that:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; x = 999
+&amp;gt;&amp;gt;&amp;gt; hex(id(x))
+'0x18f5948'
+&amp;gt;&amp;gt;&amp;gt; y = 999
+&amp;gt;&amp;gt;&amp;gt; hex(id(y))
+'0x18f59d8'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ok, but how can operator behave differently for some ints, that does not make sense!
+Actually it does... Numbers between -5 and 256 (inclusive) are special to Python (optimization).
+You can look up source code (written in C), it's located in &lt;code&gt;Objects/intobject.c&lt;/code&gt; (Python 2.x) or in &lt;code&gt;Objects/longobject.c&lt;/code&gt; (Python 3.x).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#ifndef NSMALLPOSINTS
+#define NSMALLPOSINTS           257
+#endif
+#ifndef NSMALLNEGINTS
+#define NSMALLNEGINTS           5
+#endif
+#if NSMALLNEGINTS + NSMALLPOSINTS &amp;gt; 0
+/* References to small integers are saved in this array so that they
+   can be shared.
+   The integers that are saved are those in the range
+   -NSMALLNEGINTS (inclusive) to NSMALLPOSINTS (not inclusive).
+*/
+static PyIntObject *small_ints[NSMALLNEGINTS + NSMALLPOSINTS];
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Array is then filled in by &lt;code&gt;_PyInt_Init&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Interesting thing is that those both boundaries where last time changed in Python 2.5 (from 99 to 256). Lower boundary was moved (from -1 to -5) in Python 2.3.&lt;/p&gt;
+&lt;p&gt;If someone is interested in reasoning, please look up both bug tickets &lt;a href="http://bugs.python.org/issue1436243"&gt;99 -&amp;gt; 256&lt;/a&gt; and &lt;a href="http://bugs.python.org/issue561244"&gt;-1 -&amp;gt; -5&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In my opinion that was worth pointing out, because it shows that Python is actually a living organism that is evolving. Secondly you need to remember that Python is just a piece of software and code behind it (including bugs) specifies it behaviour. That is very important, as behaviour presented above is &lt;strong&gt;not&lt;/strong&gt; true for PyPy.&lt;/p&gt;
+&lt;h2&gt;Identity of a string&lt;/h2&gt;
+&lt;p&gt;So you know that when creating new string object you're getting new immutable object. That could lead to conclusion, that every string in Python has is unique as it has it's own memory allocation. Code below would suggest so too:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; y = 'a-b-c'
+&amp;gt;&amp;gt;&amp;gt; x = 'a-b-c'
+&amp;gt;&amp;gt;&amp;gt; x is y
+False
+&amp;gt;&amp;gt;&amp;gt; y = 'a b c'
+&amp;gt;&amp;gt;&amp;gt; x = 'a b c'
+&amp;gt;&amp;gt;&amp;gt; x is y
+False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But what about that:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; y = 'abc'
+&amp;gt;&amp;gt;&amp;gt; x = 'abc'
+&amp;gt;&amp;gt;&amp;gt; x is y
+True
+&amp;gt;&amp;gt;&amp;gt; y = 'a_b_c'
+&amp;gt;&amp;gt;&amp;gt; x = 'a_b_c'
+&amp;gt;&amp;gt;&amp;gt; x is y
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you would run code from first example Python will allocate 4 different objects in memory (as suspected). However in the second example Python will allocate only 2 objects! One for each 'abc' and 'a_b_c'. Why is that?&lt;/p&gt;
+&lt;p&gt;It's another Python optimization. Quoting source code:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Caching the hash (ob_shash) saves recalculation of a string's hash value.
+Interning strings (ob_sstate) tries to ensure that only one string
+object with a given value exists, so equality tests can be one pointer
+comparison.  This is generally restricted to strings that "look like"
+Python identifiers, although the intern() builtin can be used to force
+interning of any string.
+Together, these sped the interpreter by up to 20%.&lt;/p&gt;
+&lt;p&gt;-- &lt;cite&gt;Python 2.7 - &lt;code&gt;Include/stringobject.h&lt;/code&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you're interested in some parts of implementations, look up &lt;code&gt;PyString_InternInPlace&lt;/code&gt; in &lt;code&gt;Objects/stringobject.c&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;On top of that &lt;strong&gt;all&lt;/strong&gt; strings with length 0 or 1 are also singletons.&lt;/p&gt;
+&lt;p&gt;While regular strings (length of 2 or more) are stored in &lt;code&gt;interned&lt;/code&gt; dict. Strings that contain single character are stored in &lt;code&gt;characters&lt;/code&gt; array. Finally all empty strings are stored as &lt;code&gt;nullstring&lt;/code&gt; object.&lt;/p&gt;
+&lt;p&gt;That pattern is specified as &lt;a href="http://en.wikipedia.org/wiki/String_interning"&gt;String interning&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Again this behaviour is specific to the implementation, and it's not present in PyPy.&lt;/p&gt;
+&lt;h2&gt;Fun with generators&lt;/h2&gt;
+&lt;p&gt;This one is not a "gotcha", but well known behaviour, or at least is should be. However it can take you by surprise.&lt;/p&gt;
+&lt;p&gt;From time to time you need to generate number of SQL based on some attributes. Basically it's the same query with different table name or value in one of clauses.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
+&amp;gt;&amp;gt;&amp;gt; query = &amp;quot;TRUNCATE TABLE {};&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; queries = [query.format(table) for table in TABLES_TO_TRUNCATE]
+&amp;gt;&amp;gt;&amp;gt; for query in queries:
+...     print query
+...     execute(query)
+
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t2;
+TRUNCATE TABLE t3;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This code will happily truncate all specified tables (&lt;code&gt;execute&lt;/code&gt; would be helper method that actually do the work).
+At this point you are happy and ready to move on. Then someone suggests to use a generator instead of list comprehension. That is very small change and actually... why not.
+Just to make sure you're re-running your code to check is everything fine. You might be surprised when it's not working. Take a look at the state after suggested change:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="python"&gt;&amp;gt;&amp;gt;&amp;gt; TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
+&amp;gt;&amp;gt;&amp;gt; query = &amp;quot;TRUNCATE TABLE {};&amp;quot;
+&amp;gt;&amp;gt;&amp;gt; queries = (query.format(table) for table in TABLES_TO_TRUNCATE)
+&amp;gt;&amp;gt;&amp;gt; for query in queries:
+...     print query
+...     execute(query)
+
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t1;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Do you know why that happened and how to fix it (without going back to list comprehension)?&lt;/p&gt;
+&lt;p&gt;Answer is very simple. Because generators are evaluated lazily, when next value is needed, &lt;code&gt;query&lt;/code&gt; string that contains place holder used by format is replaced after first iteration with already formatted string!
+&lt;code&gt;query&lt;/code&gt; variable should not be reused.&lt;/p&gt;
+&lt;p&gt;With list comprehension everything works as expected, because it's evaluated immediately.&lt;/p&gt;
+&lt;p&gt;Happy coding :D&lt;/p&gt;</summary></entry><entry><title>Pyp split brain</title><link href="http://mrfuxi.github.io/blog/pyp-split-brain/" rel="alternate"></link><updated>2014-05-26T00:00:00+01:00</updated><author><name>Karol Dulęba</name></author><id>tag:mrfuxi.github.io,2014-05-26:blog/pyp-split-brain/</id><summary type="html">&lt;blockquote&gt;
 &lt;p&gt;"The Pyed Piper", or pyp, is a linux command line text manipulation tool similar to awk or sed, but which uses standard python string and list methods as well as custom functions evolved to generate fast results in an intense production environment.&lt;/p&gt;
 &lt;p&gt;-- &lt;cite&gt;&lt;a href="http://opensource.imageworks.com/?p=pyp"&gt;Sony&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;

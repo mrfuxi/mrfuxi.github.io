@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://mrfuxi.github.io/index.html</loc>
-<lastmod>2014-05-27T18:56:31-00:00</lastmod>
+<lastmod>2014-06-16T22:46:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://mrfuxi.github.io/archives.html</loc>
-<lastmod>2014-05-27T18:56:31-00:00</lastmod>
+<lastmod>2014-06-16T22:46:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://mrfuxi.github.io/tags.html</loc>
-<lastmod>2014-05-27T18:56:31-00:00</lastmod>
+<lastmod>2014-06-16T22:46:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://mrfuxi.github.io/categories.html</loc>
-<lastmod>2014-05-27T18:56:31-00:00</lastmod>
+<lastmod>2014-06-16T22:46:04-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -48,6 +48,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://mrfuxi.github.io/pages/projects/</loc>
 <lastmod>2014-05-05T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://mrfuxi.github.io/blog/python-gotchas/</loc>
+<lastmod>2014-06-16T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -89,14 +96,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://mrfuxi.github.io/blog/</loc>
-<lastmod>2014-05-26T00:00:00-00:00</lastmod>
+<lastmod>2014-06-16T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://mrfuxi.github.io/author/karol-duleba.html</loc>
-<lastmod>2014-05-26T00:00:00-00:00</lastmod>
+<lastmod>2014-06-16T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

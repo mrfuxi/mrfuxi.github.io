@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Pyp split brain - Coding After Hours
+    <title>Python gotchas - Coding After Hours
 </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,13 +109,13 @@
 
 <article class="post-2315 post type-post status-publish hentry category-post-formats group format-post">
     <h2 class="post-title pad">
-        Pyp split brain
+        Python gotchas
     </h2>
 
     <ul class="post-meta pad group">
         <li><a href="http://mrfuxi.github.io/blog/" title="View all posts in blog" rel="category tag">blog</a></li>
-        <li><i class="fa fa-clock-o"></i>2014-05-26</li>
-        <li><a class="fa fa-comment" href="http://mrfuxi.github.io/blog/pyp-split-brain/#disqus_thread" data-disqus-identifier="2014-05-26-pyp-split-brain"></a></li>
+        <li><i class="fa fa-clock-o"></i>2014-06-16</li>
+        <li><a class="fa fa-comment" href="http://mrfuxi.github.io/blog/python-gotchas/#disqus_thread" data-disqus-identifier="2014-06-16-python-gotchas"></a></li>
     </ul>
 
 
@@ -131,39 +131,133 @@
 
         <div class="post-content pad">
                 <div class="entry">
-                    <blockquote>
-<p>"The Pyed Piper", or pyp, is a linux command line text manipulation tool similar to awk or sed, but which uses standard python string and list methods as well as custom functions evolved to generate fast results in an intense production environment.</p>
-<p>-- <cite><a href="http://opensource.imageworks.com/?p=pyp">Sony</a></cite></p>
+                    <p>There are times in life of every Python developer, when you are staring at the screen and can not explain or even understand what just happened.</p>
+<p>I would like to show couple of Python gotchas, that should a bring smile onto your face. At least that's the effect they have on me.</p>
+<h2>Identity of an int</h2>
+<p>Imagine scenario when you're comparing identities of 2 objects, ints in this case (do not confuse with comparing values).</p>
+<pre><code class="python">&gt;&gt;&gt; list_a = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
+&gt;&gt;&gt; list_b = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
+&gt;&gt;&gt; for a, b in zip(list_a, list_b):
+...     print &quot;{:3} is {:3} -&gt; {}&quot;.format(a, b, a is b)
+
+ -6 is  -6 -&gt; False
+ -5 is  -5 -&gt; True
+ -1 is  -1 -&gt; True
+  0 is   0 -&gt; True
+  1 is   1 -&gt; True
+ 10 is  10 -&gt; True
+256 is 256 -&gt; True
+257 is 257 -&gt; False
+999 is 999 -&gt; False
+</code></pre>
+
+<p>You might expect to get Falses for all of comparisons, as new int object should get a new address and <code>is</code> operator compares addresses. If you did not know that or you don't believe try running that:</p>
+<pre><code class="python">&gt;&gt;&gt; x = 999
+&gt;&gt;&gt; hex(id(x))
+'0x18f5948'
+&gt;&gt;&gt; y = 999
+&gt;&gt;&gt; hex(id(y))
+'0x18f59d8'
+</code></pre>
+
+<p>Ok, but how can operator behave differently for some ints, that does not make sense!
+Actually it does... Numbers between -5 and 256 (inclusive) are special to Python (optimization).
+You can look up source code (written in C), it's located in <code>Objects/intobject.c</code> (Python 2.x) or in <code>Objects/longobject.c</code> (Python 3.x).</p>
+<pre><code>#ifndef NSMALLPOSINTS
+#define NSMALLPOSINTS           257
+#endif
+#ifndef NSMALLNEGINTS
+#define NSMALLNEGINTS           5
+#endif
+#if NSMALLNEGINTS + NSMALLPOSINTS &gt; 0
+/* References to small integers are saved in this array so that they
+   can be shared.
+   The integers that are saved are those in the range
+   -NSMALLNEGINTS (inclusive) to NSMALLPOSINTS (not inclusive).
+*/
+static PyIntObject *small_ints[NSMALLNEGINTS + NSMALLPOSINTS];
+#endif
+</code></pre>
+
+<p>Array is then filled in by <code>_PyInt_Init</code>.</p>
+<p>Interesting thing is that those both boundaries where last time changed in Python 2.5 (from 99 to 256). Lower boundary was moved (from -1 to -5) in Python 2.3.</p>
+<p>If someone is interested in reasoning, please look up both bug tickets <a href="http://bugs.python.org/issue1436243">99 -&gt; 256</a> and <a href="http://bugs.python.org/issue561244">-1 -&gt; -5</a>.</p>
+<p>In my opinion that was worth pointing out, because it shows that Python is actually a living organism that is evolving. Secondly you need to remember that Python is just a piece of software and code behind it (including bugs) specifies it behaviour. That is very important, as behaviour presented above is <strong>not</strong> true for PyPy.</p>
+<h2>Identity of a string</h2>
+<p>So you know that when creating new string object you're getting new immutable object. That could lead to conclusion, that every string in Python has is unique as it has it's own memory allocation. Code below would suggest so too:</p>
+<pre><code class="python">&gt;&gt;&gt; y = 'a-b-c'
+&gt;&gt;&gt; x = 'a-b-c'
+&gt;&gt;&gt; x is y
+False
+&gt;&gt;&gt; y = 'a b c'
+&gt;&gt;&gt; x = 'a b c'
+&gt;&gt;&gt; x is y
+False
+</code></pre>
+
+<p>But what about that:</p>
+<pre><code class="python">&gt;&gt;&gt; y = 'abc'
+&gt;&gt;&gt; x = 'abc'
+&gt;&gt;&gt; x is y
+True
+&gt;&gt;&gt; y = 'a_b_c'
+&gt;&gt;&gt; x = 'a_b_c'
+&gt;&gt;&gt; x is y
+True
+</code></pre>
+
+<p>If you would run code from first example Python will allocate 4 different objects in memory (as suspected). However in the second example Python will allocate only 2 objects! One for each 'abc' and 'a_b_c'. Why is that?</p>
+<p>It's another Python optimization. Quoting source code:</p>
+<blockquote>
+<p>Caching the hash (ob_shash) saves recalculation of a string's hash value.
+Interning strings (ob_sstate) tries to ensure that only one string
+object with a given value exists, so equality tests can be one pointer
+comparison.  This is generally restricted to strings that "look like"
+Python identifiers, although the intern() builtin can be used to force
+interning of any string.
+Together, these sped the interpreter by up to 20%.</p>
+<p>-- <cite>Python 2.7 - <code>Include/stringobject.h</code></cite></p>
 </blockquote>
-<p>Fist checkout the <a href="https://www.youtube.com/watch?v=eWtVWF0JSJA">demo video on YouTube</a>.</p>
-<p>It all looks very good. Guys from Sony did a very good job. Additionally the fact that it's Python makes it all even better, as almost everything with Python is better ;)
-But is it really that good?</p>
-<p>Don't get me wrong. I'm all for simplification of the life, especially using Python. But isn't that crossing some kind of line, <a href="http://en.wikipedia.org/wiki/Unix_philosophy">proposed by Unix</a>?</p>
-<p>(That is the moment when my Python brain fights against Unix brain)</p>
-<p><strong>Unix brain:</strong>
-Unix shell is giving you all the power you need, and there is still some more to grab, if you know how. What else do you need?</p>
-<p><strong>Python brain:</strong>
-Python is and an infinite power. Pyp let you use that power to parse text in shell like fashion.</p>
-<p><strong>Unix brain:</strong>
-It's almost Python. The <em>almost</em> is a key word. To use it's power you need to learn very specific functionality.</p>
-<p><strong>Python brain:</strong>
-But I know Python, how hard could it be to remember couple of variables and functions.
-Once <em>time saving and often used</em> functionality is created it can be saved to be easily reused.</p>
-<p><strong>Unix brain:</strong>
-It's saved to <em>some</em> location, and you don't know where or how to recreate it.</p>
-<p><strong>Python brain:</strong>
-Yeah, yeah. It's all in the source code. Just look it up.
-This package gives you all what you need, in one place.</p>
-<p><strong>Unix brain:</strong>
-Heh, all you need is a <a href="http://en.wikipedia.org/wiki/KISS_principle">KISS</a>...</p>
-<h3>Summary</h3>
-<p>Assuming you will go for it and start using <code>pyp</code>, all is fine and dandy.
-Then one day you need to do some work on other machine (when paring or working on remote box).
-Are you going to say: <em>"Wait, I just need to install this python package..."</em>, because you don't know how to use standard Unix commands?
-I would feel very embarrassed.
-Last time when I heard: <em>Email me this file and I will write a Perl script to parse it</em>, I thought is was a joke.</p>
-<p>Just learn damn shell! It will serve you well for a years to come, and you can embarrass others as a bonus :D</p>
-<p>Jokes aside, I will try to give Pyp a chance, but shell is the way to go.</p>
+<p>If you're interested in some parts of implementations, look up <code>PyString_InternInPlace</code> in <code>Objects/stringobject.c</code>.</p>
+<p>On top of that <strong>all</strong> strings with length 0 or 1 are also singletons.</p>
+<p>While regular strings (length of 2 or more) are stored in <code>interned</code> dict. Strings that contain single character are stored in <code>characters</code> array. Finally all empty strings are stored as <code>nullstring</code> object.</p>
+<p>That pattern is specified as <a href="http://en.wikipedia.org/wiki/String_interning">String interning</a>.</p>
+<p>Again this behaviour is specific to the implementation, and it's not present in PyPy.</p>
+<h2>Fun with generators</h2>
+<p>This one is not a "gotcha", but well known behaviour, or at least is should be. However it can take you by surprise.</p>
+<p>From time to time you need to generate number of SQL based on some attributes. Basically it's the same query with different table name or value in one of clauses.</p>
+<pre><code class="python">&gt;&gt;&gt; TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
+&gt;&gt;&gt; query = &quot;TRUNCATE TABLE {};&quot;
+&gt;&gt;&gt; queries = [query.format(table) for table in TABLES_TO_TRUNCATE]
+&gt;&gt;&gt; for query in queries:
+...     print query
+...     execute(query)
+
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t2;
+TRUNCATE TABLE t3;
+</code></pre>
+
+<p>This code will happily truncate all specified tables (<code>execute</code> would be helper method that actually do the work).
+At this point you are happy and ready to move on. Then someone suggests to use a generator instead of list comprehension. That is very small change and actually... why not.
+Just to make sure you're re-running your code to check is everything fine. You might be surprised when it's not working. Take a look at the state after suggested change:</p>
+<pre><code class="python">&gt;&gt;&gt; TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
+&gt;&gt;&gt; query = &quot;TRUNCATE TABLE {};&quot;
+&gt;&gt;&gt; queries = (query.format(table) for table in TABLES_TO_TRUNCATE)
+&gt;&gt;&gt; for query in queries:
+...     print query
+...     execute(query)
+
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t1;
+TRUNCATE TABLE t1;
+</code></pre>
+
+<p>Do you know why that happened and how to fix it (without going back to list comprehension)?</p>
+<p>Answer is very simple. Because generators are evaluated lazily, when next value is needed, <code>query</code> string that contains place holder used by format is replaced after first iteration with already formatted string!
+<code>query</code> variable should not be reused.</p>
+<p>With list comprehension everything works as expected, because it's evaluated immediately.</p>
+<p>Happy coding :D</p>
                 </div>
 
     <div class="blogItem">
@@ -172,7 +266,7 @@ Last time when I heard: <em>Email me this file and I will write a Perl script to
     <script type="text/javascript">
         var disqus_shortname = 'mrfuxi';
 
-        var disqus_identifier = '2014-05-26-pyp-split-brain';
+        var disqus_identifier = '2014-06-16-python-gotchas';
 
 
         (function() {
