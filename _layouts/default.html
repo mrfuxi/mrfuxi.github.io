@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="{{ AUTHOR }}">
+
+    <meta name="keywords" content="{{ site.keywords }}">
+    <meta name="description" content="{{ site.description }}">
+
+    <link href="{{ site.url }}/theme/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="{{ site.url }}/theme/style.css" />
+    <link rel="stylesheet" href="{{ site.url }}/theme/custom.css" />
+    <link rel="stylesheet" href="{{ site.url }}/theme/responsive.css" />
+    <link rel="stylesheet" href="{{ site.url }}/theme/fonts/font-awesome.min.css" />
+
+    {% if FEED_ALL_ATOM %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ site.title }} Atom Feed" />
+    {% endif %}
+
+    {% if FEED_ALL_RSS %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ site.title }} RSS Feed" />
+    {% endif %}
+
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body class="col-1cl full-width topbar-enabled">
+    {% include navbar.html %}
+
+    <div id="page" class="container {{PAGE_CLASS}}">
+        <div class="main group">
+            <section class="content">
+                {{ content }}
+            </section>
+        </div>
+    </div>
+
+    <script src="{{ site.url }}/theme/js/jquery-1.11.0.js"></script>
+    <script src="{{ site.url }}/theme/js/bootstrap.js"></script>
+    <script src="{{ site.url }}/theme/js/scripts.js"></script>
+    <script src="{{ site.url }}/theme/js/jquery.flexslider.min.js"></script>
+
+    {% include ga.html %}
+    {% include disqus_count.html %}
+
+    {% include footer.html %}
+  </body>
+</html>

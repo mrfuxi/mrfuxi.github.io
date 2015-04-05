@@ -1,0 +1,52 @@
+# Site settings
+name: Karol Dulęba
+title: Coding After Hours
+email: karol.duleba@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Blog about writing software with Python, Solr and the processes around
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "" # http://mrfuxi.github.io
+keywords: "Python, Solr, C++, Linux, Docker, Lucene, Django, blog, software development"
+
+disqus: mrfuxi
+#google_analytics: UA-51123213-1
+
+timezone: Europe/London
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+
+permalink: /:categories/:title/
+
+social:
+    - title: "Twitter"
+      url: "https://twitter.com/MrFuxi"
+      class: "twitter"
+    - title: "GitHub"
+      url: "https://github.com/mrfuxi"
+      class: "github"
+    - title: "Google Plus"
+      url: "https://plus.google.com/+KarolDulęba"
+      class: "google-plus"
+    - title: "LinkedIn"
+      url: "http://www.linkedin.com/in/dulebakarol"
+      class: "linkedin"
+
+menu_items:
+    - title: "Home"
+      url: "/"
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+    - Gemfile
+    - Gemfile.lock
+    - LICENSE
+    - README.md

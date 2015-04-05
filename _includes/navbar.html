@@ -1,0 +1,46 @@
+<header id="header">
+    <nav class="nav-container group" id="nav-topbar">
+        <div class="nav-toggle"><i class="fa fa-bars"></i></div>
+        <div class="nav-text"><!-- put your mobile menu text here --></div>
+
+        <div class="nav-wrap container">
+            {% include menu.html %}
+        </div>
+
+        {% if SEARCH %}
+        <div class="container"> 
+            <div class="toggle-search"><i class="fa fa-search"></i></div>
+            <div class="search-expand">
+                <div class="search-expand-inner">
+                    <form method="get" class="searchform themeform" action="http://demo.alxmedia.se/anew/">
+                        <div>
+                            <input type="text" class="search" name="s" onblur="if(this.value=='')this.value='To search type and hit enter';" onfocus="if(this.value=='To search type and hit enter')this.value='';" value="To search type and hit enter">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <div class="pad group">
+            <h1 class="site-title">
+                <a href="/" rel="home">
+                    <img src="{{ site.url }}/theme/img/logo.png" alt="{{ site.title }}">
+                </a>
+            </h1>
+            <p class="site-description">{{ site.title }}</p>
+
+            <ul class="social-links">
+                {% for soc in site.social %}
+                <li>
+                    <a rel="nofollow" class="social-tooltip" title="{{ soc.title }}" href="{{ soc.url }}">
+                        <i class="fa fa-{{ soc.class }}"></i>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div><!--/.container-->
+</header>
