@@ -44,6 +44,12 @@
     <script src="{{ site.url }}/theme/js/scripts.js"></script>
     <script src="{{ site.url }}/theme/js/jquery.flexslider.min.js"></script>
 
+    {% if page.code %}
+        <link href="{{ site.url }}/theme/css/highlightjs/default.min.css" rel="stylesheet">
+        <script src="{{ site.url }}/theme/js/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    {% endif %}
+
     {% include ga.html %}
     {% include disqus_count.html %}
 

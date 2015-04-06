@@ -3,6 +3,7 @@ date: 2014-05-05
 title: Use Docker to develop Solr plugin
 category: blog
 disqus_id: 2014-05-05-docker-solr-plugin
+code: true
 ---
 
 From time to time I have a need to customize Solr a bit more that is's possible using regular configuration.
@@ -42,6 +43,7 @@ ant run
 Below you'll find full definitions of both Docker image and Java build file.
 
 Dockerfile:
+
 ```docker
 FROM makuk66/docker-solr
 MAINTAINER  Karol Duleba "mr.fuxi@gmail.com"
@@ -68,6 +70,7 @@ CMD ["/bin/bash"]
 ```
 
 build.xml:
+
 ```java
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="SolrPlugin" basedir="." default="main">

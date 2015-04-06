@@ -9,13 +9,13 @@ url: "" # http://mrfuxi.github.io
 keywords: "Python, Solr, C++, Linux, Docker, Lucene, Django, blog, software development"
 
 disqus: mrfuxi
-#google_analytics: UA-51123213-1
+google_analytics: UA-51123213-1
 
 timezone: Europe/London
 
 # Build settings
-markdown: kramdown
-highlighter: pygments
+markdown: redcarpet
+highlighter:
 
 permalink: /:categories/:title/
 

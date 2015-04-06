@@ -3,6 +3,7 @@ date: 2014-06-16
 title: Python gotchas
 category: blog
 disqus_id: 2014-06-16-python-gotchas
+code: true
 ---
 
 There are times in life of every Python developer, when you are staring at the screen and can not explain or even understand what just happened.
