@@ -1,0 +1,32 @@
+<ul id="menu-topbar-menu" class="nav container-inner group">
+{% for item in site.menu_items %}
+    <li class="menu-item {%if page.url == item.url %}current_page_item {% endif %}">
+        <a href="{{ item.url }}">
+            {{ item.title }}
+        </a>
+    </li>
+{% endfor %}
+
+{% if DISPLAY_CATEGORIES_ON_MENU %}
+    {% for cat in categories %}
+        <li class="menu-item {%if cat == category %}current_page_item {% endif %}">
+            <a href="{{ SITEURL }}/{{ cat.url }}">
+                {{ cat }}
+            </a>
+        </li>
+    {% endfor %}
+{% endif %}
+
+{% assign pages = site.pages | sort: 'sort' %}
+{% for item in pages %}
+    {% if item.sort %}
+        <li class="menu-item {%if page.url == item.url %}current_page_item {% endif %}">
+            <a href="{{ item.url }}">
+                {{ item.title }}
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}
+
+</ul>
+

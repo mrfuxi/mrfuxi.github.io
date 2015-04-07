@@ -1,0 +1,57 @@
+{% if article.posttype %}
+    {% assign posttype = article.posttype %}
+{% else %}
+    {% assign posttype = 'post' %}
+{% endif %}
+
+<article class="post-2315 post type-post status-publish hentry category-post-formats group format-{{ posttype }}">
+    <h2 class="post-title pad">
+    {% if full_view == false %}
+        <a href="{{ site.url }}{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+    {% else %}
+        {{ article.title }}
+    {% endif %}
+    </h2>
+
+    <ul class="post-meta pad group">
+        <li><a href="{{ site.url }}{{ article.category.url }}" title="View all posts in {{article.category}}" rel="category tag">{{article.category}}</a></li>
+        <li><i class="fa fa-clock-o"></i>{{ article.date | date: "%Y-%m-%d" }}</li>
+        {% if article.disqus_id %}
+        <li><a class="fa fa-comment" href="{{ site.url }}{{ article.url }}#disqus_thread" data-disqus-identifier="{{ article.disqus_id }}"></a></li>
+        {% endif %}
+    </ul>
+
+    {% comment %} include "posttypes/%s.html"|format(posttype) ignore missing {% endcomment %}
+
+    <div class="post-inner">
+        <div class="post-deco">
+            <div class="hex hex-small">
+                <div class="hex-inner"><i class="fa"></i></div>
+                <a href="{{ site.url }}{{ article.posttype.url }}"></a>
+                <div class="corner-1"></div>
+                <div class="corner-2"></div>
+            </div>
+        </div>
+
+        <div class="post-content pad">
+            {% if full_view == false %}
+                <div class="entry">
+                    {{ article.content | truncatewords:50 }}
+                </div>
+
+                <a class="more-link-custom" href="{{ site.url }}{{ article.url }}" rel="bookmark" title="{{ article.title|striptags }}">
+                    <span><i>More</i></span>
+                </a>
+            {% else %}
+                <div class="entry">
+                    {{ content }}
+                </div>
+
+                {% if article.disqus_id %}
+                    {% assign disqusid=article.disqus_id %}
+                    {% include disqus_thread.html %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</article>

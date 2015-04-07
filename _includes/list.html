@@ -1,0 +1,6 @@
+<div class="pad group">
+    {% for article in site.posts %}
+        {% assign full_view=false %}
+        {% include post.html %}
+    {% endfor %}
+</div>
