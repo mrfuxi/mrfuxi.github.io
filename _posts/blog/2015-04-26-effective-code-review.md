@@ -1,8 +1,8 @@
 ---
-date: 2015-04-25
+date: 2015-04-26
 title: Effective code review
 category: blog
-disqus_id: 2015-04-25-effective-code-review
+disqus_id: 2015-04-26-effective-code-review
 code: true
 layout: post
 ---
@@ -23,7 +23,7 @@ It's good in seance that my reviews got more in deep. After all I need to:
 - prepare a diff
 - check the diff
 
-You can say that I first three points should always be done. But when CI run tests for you and GitHub created a diff. Developer not always will check implementation him self. Especially when there is a QA team further on.
+You can say that I first three points should always be done. But when CI run tests for you and GitHub created a diff. Developer not always will check implementation himself. Especially when there is a QA team further on.
 
 Now I almost always **check how implementation behaves in the system**, as some test might not take into consideration other factors.
 Not once or twice I've seen implementations that look good on the diff, but the moment you start playing with it cracks start to appear.
