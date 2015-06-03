@@ -1,8 +1,8 @@
 ---
-date: 2015-05-31
+date: 2015-06-03
 title: 5 stages of learning Golang
 category: blog
-disqus_id: 2015-05-31-5-stages-of-learning-golang
+disqus_id: 2015-06-03-5-stages-of-learning-golang
 code: false
 layout: post
 ---
