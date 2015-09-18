@@ -12,7 +12,7 @@ disqus_id: 2014-05-25-article-digest-1
 
 2. [Try Finally Python Quiz](http://nuitka.net/posts/try-finally-python-quiz.html)
 
-    Short but very interesting quiz about try-finally in Python. You can learn something every day. Spoiler alert: I did not know that ```continue``` is not supported within ```finally```
+    Short but very interesting quiz about try-finally in Python. You can learn something every day. Spoiler alert: I did not know that `continue` is not supported within `finally`
 
 3. [Django sticky queryset filters](http://blog.ionelmc.ro/2014/05/10/django-sticky-queryset-filters/)
 

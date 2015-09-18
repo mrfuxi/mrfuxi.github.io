@@ -17,7 +17,7 @@ google_analytics: UA-51123213-1
 timezone: Europe/London
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 highlighter:
 
 permalink: /:categories/:title/

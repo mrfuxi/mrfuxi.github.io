@@ -27,7 +27,7 @@ That way environment part is done. Remaining thing is to be able to compile and 
 
 At the end of the day I can start new container, build plug-in and run Solr in couple of lines:
 
-```shell
+~~~shell
 # Build image (1 off)
 docker build -t solr_dev .
 
@@ -36,7 +36,7 @@ docker run -i --rm -t -v `pwd`/plugin:/opt/code:rw -P -v `pwd`/cores:/opt/cores/
 
 # Recompile plug-in and start Solr
 ant run
-```
+~~~
 
 ---
 
@@ -44,7 +44,7 @@ Below you'll find full definitions of both Docker image and Java build file.
 
 Dockerfile:
 
-```docker
+~~~docker
 FROM makuk66/docker-solr
 MAINTAINER  Karol Duleba "mr.fuxi@gmail.com"
 
@@ -67,11 +67,11 @@ WORKDIR /opt/code
 EXPOSE 8983
 
 CMD ["/bin/bash"]
-```
+~~~
 
 build.xml:
 
-```java
+~~~java
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="SolrPlugin" basedir="." default="main">
     <property name="src.dir"     value="src"/>
@@ -114,4 +114,4 @@ build.xml:
     <target name="clean-build" depends="clean,jar"/>
     <target name="main" depends="clean,jar"/>
 </project>
-```
+~~~

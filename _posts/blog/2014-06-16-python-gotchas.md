@@ -14,7 +14,7 @@ I would like to show couple of Python gotchas, that should a bring smile onto yo
 
 Imagine scenario when you're comparing identities of 2 objects, ints in this case (do not confuse with comparing values).
 
-```python
+~~~python
 >>> list_a = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
 >>> list_b = [-6, -5, -1, 0, 1, 10, 256, 257, 999]
 >>> for a, b in zip(list_a, list_b):
@@ -29,24 +29,24 @@ Imagine scenario when you're comparing identities of 2 objects, ints in this cas
 256 is 256 -> True
 257 is 257 -> False
 999 is 999 -> False
-```
+~~~
 
 You might expect to get Falses for all of comparisons, as new int object should get a new address and `is` operator compares addresses. If you did not know that or you don't believe try running that:
 
-```python
+~~~python
 >>> x = 999
 >>> hex(id(x))
 '0x18f5948'
 >>> y = 999
 >>> hex(id(y))
 '0x18f59d8'
-```
+~~~
 
 Ok, but how can operator behave differently for some ints, that does not make sense!
 Actually it does... Numbers between -5 and 256 (inclusive) are special to Python (optimization).
 You can look up source code (written in C), it's located in `Objects/intobject.c` (Python 2.x) or in `Objects/longobject.c` (Python 3.x).
 
-```
+~~~c
 #ifndef NSMALLPOSINTS
 #define NSMALLPOSINTS           257
 #endif
@@ -61,7 +61,7 @@ You can look up source code (written in C), it's located in `Objects/intobject.c
 */
 static PyIntObject *small_ints[NSMALLNEGINTS + NSMALLPOSINTS];
 #endif
-```
+~~~
 
 Array is then filled in by `_PyInt_Init`.
 
@@ -75,7 +75,7 @@ In my opinion that was worth pointing out, because it shows that Python is actua
 
 So you know that when creating new string object you're getting new immutable object. That could lead to conclusion, that every string in Python has is unique as it has it's own memory allocation. Code below would suggest so too:
 
-```python
+~~~python
 >>> y = 'a-b-c'
 >>> x = 'a-b-c'
 >>> x is y
@@ -84,11 +84,11 @@ False
 >>> x = 'a b c'
 >>> x is y
 False
-```
+~~~
 
 But what about that:
 
-```python
+~~~python
 >>> y = 'abc'
 >>> x = 'abc'
 >>> x is y
@@ -97,7 +97,7 @@ True
 >>> x = 'a_b_c'
 >>> x is y
 True
-```
+~~~
 
 If you would run code from first example Python will allocate 4 different objects in memory (as suspected). However in the second example Python will allocate only 2 objects! One for each 'abc' and 'a_b_c'. Why is that?
 
@@ -129,7 +129,7 @@ This one is not a "gotcha", but well known behaviour, or at least is should be. 
 
 From time to time you need to generate number of SQL based on some attributes. Basically it's the same query with different table name or value in one of clauses.
 
-```python
+~~~python
 >>> TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
 >>> query = "TRUNCATE TABLE {};"
 >>> queries = [query.format(table) for table in TABLES_TO_TRUNCATE]
@@ -140,13 +140,13 @@ From time to time you need to generate number of SQL based on some attributes. B
 TRUNCATE TABLE t1;
 TRUNCATE TABLE t2;
 TRUNCATE TABLE t3;
-```
+~~~
 
 This code will happily truncate all specified tables (`execute` would be helper method that actually do the work).
 At this point you are happy and ready to move on. Then someone suggests to use a generator instead of list comprehension. That is very small change and actually... why not.
 Just to make sure you're re-running your code to check is everything fine. You might be surprised when it's not working. Take a look at the state after suggested change:
 
-```python
+~~~python
 >>> TABLES_TO_TRUNCATE = ['t1', 't2', 't3']
 >>> query = "TRUNCATE TABLE {};"
 >>> queries = (query.format(table) for table in TABLES_TO_TRUNCATE)
@@ -157,7 +157,7 @@ Just to make sure you're re-running your code to check is everything fine. You m
 TRUNCATE TABLE t1;
 TRUNCATE TABLE t1;
 TRUNCATE TABLE t1;
-```
+~~~
 
 Do you know why that happened and how to fix it (without going back to list comprehension)?
 

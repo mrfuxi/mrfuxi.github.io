@@ -40,25 +40,25 @@ As a developer I had to crate shell commands to help me with all that.
 
 I modified `.gitconfig`:
 
-```ini
+~~~ini
 [alias]
     codediff = !git diff $1 -- $(git diff --name-only $1 | grep -vE "test|migrations")
     testdiff = !git diff $1 -- $(git diff --name-only $1 | grep test)
     migrationsdiff = !git diff $1 -- $(git diff --name-only $1 | grep migrations)
 [diff]
     orderfile = ~/.git.orderfile
-```
+~~~
 
 And specified custom order `~/.git.orderfile`:
 
-```
+~~~
 *.py
 *.go
 *.js
 *.html
 *.css
 *.sass
-```
+~~~
 
 At the end of the day my flow of work looks roughly like that:
 
