@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ site.url }}/theme/responsive.css" />
     <link rel="stylesheet" href="{{ site.url }}/theme/fonts/font-awesome.min.css" />
 
+    {% feed_meta %}
+
     {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ site.title }} Atom Feed" />
     {% endif %}

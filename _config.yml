@@ -8,8 +8,8 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "" # http://mrfuxi.github.io
 keywords: "Python, Solr, C++, Linux, Docker, Lucene, Django, blog, software development"
 
-# gems:
-#   - jekyll-feed
+gems:
+  - jekyll-feed
 
 disqus: mrfuxi
 google_analytics: UA-51123213-1
