@@ -10,7 +10,7 @@ permalink: /contact/
 
 It's best to catch me using:
 
-- Email <karol.duleba@gmail.com>
+- Email <karolduleba@gmail.com>
 - [LinkedIn](http://www.linkedin.com/in/dulebakarol)
 - [Google+](https://plus.google.com/+KarolDul%C4%99ba)
 
